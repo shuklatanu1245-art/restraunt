@@ -57,7 +57,7 @@ function MenuContent() {
   };
 
   // Place Order Simulation
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (cart.length === 0) return;
 
     const orderId = `QR-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -69,7 +69,23 @@ function MenuContent() {
       timestamp: new Date().toISOString()
     };
 
-    // Store in localStorage for feedback reference or listing
+    // Save to Neon PostgreSQL via API
+    try {
+      await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: newOrder.orderId,
+          table: newOrder.table,
+          items: newOrder.items,
+          total: newOrder.total
+        })
+      });
+    } catch (err) {
+      console.error('Failed to save order to database:', err);
+    }
+
+    // Also keep localStorage as local backup
     const previousOrders = JSON.parse(localStorage.getItem('qr_bites_orders') || '[]');
     localStorage.setItem('qr_bites_orders', JSON.stringify([...previousOrders, newOrder]));
 
