@@ -70,13 +70,13 @@ export default function Home() {
             {/* Visual block */}
             <div className="relative h-[350px] sm:h-[450px] rounded-2xl overflow-hidden shadow-2xl border-4 border-accent/25">
               <img
-                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=800"
-                alt="Chef preparing fresh meal"
+                src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800"
+                alt="Family eating delicious food together"
                 className="w-full h-full object-cover"
               />
               <div className="absolute bottom-6 left-6 bg-primary text-accent px-6 py-4 rounded-xl shadow-lg border border-accent/15">
-                <span className="block font-serif text-3xl font-black">100%</span>
-                <span className="block font-sans text-[10px] uppercase font-bold tracking-wider text-cream">Fresh Ingredients</span>
+                <span className="block font-serif text-3xl font-black">Family</span>
+                <span className="block font-sans text-[10px] uppercase font-bold tracking-wider text-cream">Moments & Memories</span>
               </div>
             </div>
 

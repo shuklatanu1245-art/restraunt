@@ -14,10 +14,12 @@ export default function Header() {
 
   const navLinks = [
     { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
     { name: 'Menu', href: '/menu' },
     { name: 'Gallery', href: '/#gallery' },
     { name: 'Contact', href: '/contact' },
     { name: 'Feedback', href: '/feedback' },
+    { name: 'Staff', href: '/staff' },
   ];
 
   const isActive = (href) => {

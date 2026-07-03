@@ -39,6 +39,18 @@ export async function initializeDatabase() {
       )
     `;
 
+    // Create staff table
+    await sql`
+      CREATE TABLE IF NOT EXISTS staff (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        mobile VARCHAR(20) NOT NULL,
+        status VARCHAR(20) DEFAULT 'pending',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      )
+    `;
+
     console.log('✅ Database tables initialized successfully');
     return { success: true };
   } catch (error) {

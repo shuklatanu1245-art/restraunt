@@ -77,11 +77,15 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-cream/10 text-center text-xs text-cream/50 font-sans flex flex-col sm:flex-row justify-between items-center gap-4">
           <p>© {new Date().getFullYear()} {restaurantConfig.name}. All Rights Reserved.</p>
           <div className="space-x-4">
+            <Link href="/about" className="hover:text-accent transition-colors">About Us</Link>
+            <span>•</span>
             <Link href="/feedback" className="hover:text-accent transition-colors">Feedback</Link>
             <span>•</span>
             <Link href="/contact" className="hover:text-accent transition-colors">Contact</Link>
             <span>•</span>
             <Link href="/menu" className="hover:text-accent transition-colors">Digital Menu</Link>
+            <span>•</span>
+            <Link href="/staff" className="hover:text-accent transition-colors">Staff Login</Link>
           </div>
         </div>
       </div>
