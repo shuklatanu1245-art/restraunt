@@ -194,28 +194,47 @@ export default function TableTentQR() {
           {/* Interactive QR Generator and Table-Tent Card Preview */}
           <div className="lg:col-span-5 flex flex-col items-center">
             {/* Control Panel */}
-            <div className="w-full max-w-sm mb-6 bg-white p-4 rounded-xl border border-accent/15 shadow-sm">
-              <label htmlFor="table-select" className="block text-xs font-bold text-primary uppercase tracking-wide mb-2">
-                Configure Table Number (for testing QR logic):
-              </label>
-              <div className="flex space-x-2">
-                <select
-                  id="table-select"
-                  value={tableNumber}
-                  onChange={(e) => setTableNumber(e.target.value)}
-                  className="bg-cream border border-accent/20 rounded-lg px-3 py-2 text-sm text-primary font-bold focus:outline-none focus:border-primary flex-grow"
-                >
-                  {['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].map(num => (
-                    <option key={num} value={num}>Table {num}</option>
-                  ))}
-                </select>
-                <button
-                  onClick={handlePrint}
-                  className="flex items-center justify-center space-x-2 bg-primary text-cream hover:bg-primary-dark hover:text-accent font-sans text-xs font-bold px-4 py-2.5 rounded-lg shadow transition-all duration-200"
-                >
-                  <Printer className="w-4 h-4" />
-                  <span>Print Card</span>
-                </button>
+            <div className="w-full max-w-sm mb-6 bg-white p-5 rounded-xl border border-accent/15 shadow-sm space-y-4">
+              <div className="space-y-1.5">
+                <label htmlFor="url-input" className="block text-xs font-bold text-primary uppercase tracking-wide">
+                  Base Website URL:
+                </label>
+                <input
+                  id="url-input"
+                  type="text"
+                  value={originUrl}
+                  onChange={(e) => setOriginUrl(e.target.value)}
+                  placeholder="https://your-vercel-domain.vercel.app"
+                  className="w-full bg-cream border border-accent/20 rounded-lg px-3 py-2 text-xs text-primary focus:outline-none focus:border-primary font-mono"
+                />
+                <span className="text-[9px] text-dark-muted block leading-relaxed">
+                  💡 Autodetected from browser. Change this to your Vercel URL (e.g. <code>https://restraunt-three.vercel.app</code>) to generate a QR code that will work on your phone!
+                </span>
+              </div>
+
+              <div className="space-y-1.5">
+                <label htmlFor="table-select" className="block text-xs font-bold text-primary uppercase tracking-wide">
+                  Configure Table Number:
+                </label>
+                <div className="flex space-x-2">
+                  <select
+                    id="table-select"
+                    value={tableNumber}
+                    onChange={(e) => setTableNumber(e.target.value)}
+                    className="bg-cream border border-accent/20 rounded-lg px-3 py-2 text-sm text-primary font-bold focus:outline-none focus:border-primary flex-grow"
+                  >
+                    {['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].map(num => (
+                      <option key={num} value={num}>Table {num}</option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={handlePrint}
+                    className="flex items-center justify-center space-x-2 bg-primary text-cream hover:bg-primary-dark hover:text-accent font-sans text-xs font-bold px-4 py-2.5 rounded-lg shadow transition-all duration-200"
+                  >
+                    <Printer className="w-4 h-4" />
+                    <span>Print Card</span>
+                  </button>
+                </div>
               </div>
             </div>
 
