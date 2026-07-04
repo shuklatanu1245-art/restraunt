@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Shield, Plus, Edit2, Trash2, Check, X, Palette, LogOut, Loader2 } from 'lucide-react';
+import { Shield, Plus, Edit2, Trash2, Check, X, Palette, LogOut, Loader2, UploadCloud } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminPage() {
@@ -19,6 +19,7 @@ export default function AdminPage() {
   const [menuItems, setMenuItems] = useState([]);
   const [isEditingItem, setIsEditingItem] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   // Theme State
   const [theme, setTheme] = useState({
@@ -120,6 +121,34 @@ export default function AdminPage() {
   const handleEditItem = (item) => {
     setCurrentItem({ ...item });
     setIsEditingItem(true);
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setCurrentItem((prev) => ({ ...prev, image: data.url }));
+      } else {
+        alert(data.error || 'Upload failed');
+      }
+    } catch (err) {
+      console.error('Error uploading:', err);
+      alert('Error uploading image');
+    } finally {
+      setIsUploadingImage(false);
+    }
   };
 
   const handleAddNewItem = () => {
@@ -440,13 +469,32 @@ export default function AdminPage() {
                   ></textarea>
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-xs font-medium text-dark-muted mb-1">Image URL (Unsplash/etc)</label>
-                  <input
-                    type="url"
-                    value={currentItem.image}
-                    onChange={(e) => setCurrentItem({...currentItem, image: e.target.value})}
-                    className="w-full px-3 py-2 rounded-lg border border-accent/20 text-sm"
-                  />
+                  <label className="block text-xs font-medium text-dark-muted mb-1">Image URL or Upload</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="url"
+                      value={currentItem.image}
+                      onChange={(e) => setCurrentItem({...currentItem, image: e.target.value})}
+                      placeholder="https://..."
+                      className="flex-1 px-3 py-2 rounded-lg border border-accent/20 text-sm focus:border-primary outline-none"
+                    />
+                    <div className="relative">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        disabled={isUploadingImage}
+                      />
+                      <button
+                        type="button"
+                        className="h-full px-4 bg-accent/10 text-accent rounded-lg flex items-center justify-center hover:bg-accent/20 transition-colors"
+                        disabled={isUploadingImage}
+                      >
+                        {isUploadingImage ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div className="col-span-2 flex items-center gap-2 mt-2">
                   <input
