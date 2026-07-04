@@ -2,11 +2,19 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Star, Heart, MapPin, Phone, Clock, MessageSquare, Utensils } from 'lucide-react';
-import { restaurantConfig, menuItems } from '@/data/menu';
+import { restaurantConfig } from '@/data/menu';
 import TableTentQR from '@/components/TableTentQR';
+import sql from '@/lib/db';
 
-export default function Home() {
-  const popularItems = menuItems.filter(item => item.popular);
+export default async function Home() {
+  let popularItems = [];
+  try {
+    const items = await sql`SELECT * FROM menu_items WHERE popular = true LIMIT 3`;
+    // Format to match frontend structure if needed, or just use as is
+    popularItems = items.map(item => ({...item, id: item.key_id}));
+  } catch (err) {
+    console.error("Failed to fetch popular items:", err);
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -226,7 +234,7 @@ export default function Home() {
           <div className="bg-dark-muted rounded-3xl p-8 sm:p-12 border border-accent/15 flex flex-col lg:flex-row justify-between items-center gap-8 shadow-2xl">
             <div className="space-y-4 text-center lg:text-left">
               <span className="text-accent text-xs font-bold tracking-widest uppercase block">Ready to visit?</span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold">Find Us in Bengaluru</h2>
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold">Find Us in Gwalior</h2>
               <p className="text-cream/70 text-sm max-w-md font-sans">
                 {restaurantConfig.address}
               </p>

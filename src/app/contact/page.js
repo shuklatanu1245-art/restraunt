@@ -113,10 +113,10 @@ export default function ContactPage() {
             <div className="bg-white border border-accent/15 rounded-3xl p-4 shadow-md overflow-hidden space-y-4">
               <h3 className="font-serif text-sm font-bold text-primary uppercase tracking-wider px-2">Our Location on Map</h3>
               <div className="h-64 sm:h-72 w-full rounded-2xl overflow-hidden relative bg-cream-dark">
-                {/* Embed a Google Map with a secure default iframe for Gourmet Bengaluru */}
+                {/* Embed a Google Map with a secure default iframe for Gwalior */}
                 <iframe
-                  title="QR Bites Restaurant Location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m12!1m3!1d3887.971933099955!2d77.59372131528659!3d12.971891490855855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1625243890123!5m2!1sen!2sin"
+                  title="Taste Bite Restaurant Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114510.66270498305!2d78.11721535!3d26.216664999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3976c5d1792291cb%3A0x85e6833b3b4fbb3a!2sGwalior%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin"
                   className="w-full h-full border-0 grayscale opacity-85 hover:grayscale-0 transition-all duration-300"
                   allowFullScreen=""
                   loading="lazy"

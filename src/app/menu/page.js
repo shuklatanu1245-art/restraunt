@@ -4,12 +4,15 @@ import React, { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ShoppingCart, Plus, Minus, Search, Trash2, CheckCircle2, ChevronRight, X } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import { menuItems, menuCategories, restaurantConfig } from '@/data/menu';
+import { menuCategories, restaurantConfig } from '@/data/menu';
 
 function MenuContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { cart, addToCart, updateQuantity, removeFromCart, cartTotal, cartCount, clearCart } = useCart();
+  
+  const [menuItems, setMenuItems] = useState([]);
+  const [isLoadingMenu, setIsLoadingMenu] = useState(true);
   
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,6 +22,29 @@ function MenuContent() {
   const [placedOrderDetails, setPlacedOrderDetails] = useState(null);
   
   const itemRefs = useRef({});
+
+  // Fetch Menu Items
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const res = await fetch('/api/menu');
+        const data = await res.json();
+        if (data.success) {
+          // Map DB items to frontend format (key_id -> id)
+          const formattedItems = data.items.map(item => ({
+            ...item,
+            id: item.key_id
+          }));
+          setMenuItems(formattedItems);
+        }
+      } catch (err) {
+        console.error("Failed to fetch menu:", err);
+      } finally {
+        setIsLoadingMenu(false);
+      }
+    };
+    fetchMenu();
+  }, []);
 
   // Parse Table Number and Select items from Query Params
   useEffect(() => {
@@ -30,7 +56,7 @@ function MenuContent() {
     }
 
     const selectId = searchParams.get('select');
-    if (selectId && itemRefs.current[selectId]) {
+    if (selectId && itemRefs.current[selectId] && !isLoadingMenu) {
       setTimeout(() => {
         itemRefs.current[selectId].scrollIntoView({ behavior: 'smooth', block: 'center' });
         // Add a temporary highlight effect
@@ -40,13 +66,13 @@ function MenuContent() {
         }, 2000);
       }, 500);
     }
-  }, [searchParams]);
+  }, [searchParams, isLoadingMenu]);
 
   // Filter Menu Items
   const filteredItems = menuItems.filter(item => {
     const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          item.description.toLowerCase().includes(searchQuery.toLowerCase());
+                          (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
