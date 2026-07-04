@@ -123,7 +123,7 @@ function MenuContent() {
   };
 
   return (
-    <div className="min-h-screen bg-cream pb-24">
+    <div className="min-h-screen bg-cream pb-32">
       {/* Table Banner */}
       <div className="bg-primary text-cream py-3 px-4 text-center text-xs font-semibold tracking-wider uppercase border-b border-accent/20 flex items-center justify-center space-x-2">
         <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-ping"></span>
@@ -346,7 +346,7 @@ function MenuContent() {
 
       {/* Floating Mobile Cart Bar */}
       {cart.length > 0 && (
-        <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40 bg-primary text-cream rounded-2xl shadow-2xl p-4 border border-accent/25 flex items-center justify-between animate-fadeInUp">
+        <div className="lg:hidden fixed bottom-4 left-4 right-4 z-[60] bg-primary text-cream rounded-2xl shadow-2xl p-4 border border-accent/25 flex items-center justify-between animate-fadeInUp">
           <div className="flex items-center space-x-3">
             <div className="relative bg-accent text-primary w-10 h-10 rounded-xl flex items-center justify-center font-bold shadow-md">
               <ShoppingCart className="w-5 h-5" />
@@ -372,7 +372,7 @@ function MenuContent() {
 
       {/* Mobile Cart Details Modal / Bottom Sheet */}
       {isCartOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-dark/65 backdrop-blur-sm flex flex-col justify-end animate-fadeInUp">
+        <div className="lg:hidden fixed inset-0 z-[70] bg-dark/65 backdrop-blur-sm flex flex-col justify-end animate-fadeInUp">
           <div className="bg-white rounded-t-3xl border-t border-accent/20 p-6 space-y-6 max-h-[85vh] overflow-y-auto shadow-2xl">
             {/* Header */}
             <div className="flex justify-between items-center border-b border-accent/10 pb-4">
