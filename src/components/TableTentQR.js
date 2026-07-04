@@ -148,6 +148,23 @@ export default function TableTentQR() {
     printWindow.document.close();
   };
 
+  const handleDownloadQR = () => {
+    const svgElement = document.getElementById('svg-qr-path');
+    if (!svgElement) return;
+
+    const serializer = new XMLSerializer();
+    const source = serializer.serializeToString(svgElement);
+    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+
+    const downloadLink = document.createElement("a");
+    downloadLink.href = url;
+    downloadLink.download = `TasteBite-QR-Table-${tableNumber}.svg`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+
+
   return (
     <section className="py-16 bg-cream-dark/50 border-y border-accent/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -227,13 +244,22 @@ export default function TableTentQR() {
                       <option key={num} value={num}>Table {num}</option>
                     ))}
                   </select>
-                  <button
-                    onClick={handlePrint}
-                    className="flex items-center justify-center space-x-2 bg-primary text-cream hover:bg-primary-dark hover:text-accent font-sans text-xs font-bold px-4 py-2.5 rounded-lg shadow transition-all duration-200"
-                  >
-                    <Printer className="w-4 h-4" />
-                    <span>Print Card</span>
-                  </button>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <button
+                      onClick={handleDownloadQR}
+                      className="flex-1 flex items-center justify-center space-x-2 bg-white border-2 border-primary text-primary hover:bg-cream-dark font-sans text-xs font-bold px-4 py-2.5 rounded-lg shadow-sm transition-all duration-200"
+                    >
+                      <Download className="w-4 h-4" />
+                      <span>Download</span>
+                    </button>
+                    <button
+                      onClick={handlePrint}
+                      className="flex-1 flex items-center justify-center space-x-2 bg-primary text-cream hover:bg-primary-dark hover:text-accent font-sans text-xs font-bold px-4 py-2.5 rounded-lg shadow transition-all duration-200"
+                    >
+                      <Printer className="w-4 h-4" />
+                      <span>Print Card</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
