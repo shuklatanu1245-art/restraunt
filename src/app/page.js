@@ -11,7 +11,7 @@ export default async function Home() {
   try {
     const items = await sql`SELECT * FROM menu_items WHERE popular = true LIMIT 3`;
     // Format to match frontend structure if needed, or just use as is
-    popularItems = items.map(item => ({...item, id: item.key_id}));
+    popularItems = items.map(item => ({...item, id: item.key_id, price: parseFloat(item.price)}));
   } catch (err) {
     console.error("Failed to fetch popular items:", err);
   }

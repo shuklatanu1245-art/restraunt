@@ -33,7 +33,8 @@ function MenuContent() {
           // Map DB items to frontend format (key_id -> id)
           const formattedItems = data.items.map(item => ({
             ...item,
-            id: item.key_id
+            id: item.key_id,
+            price: parseFloat(item.price)
           }));
           setMenuItems(formattedItems);
         }
